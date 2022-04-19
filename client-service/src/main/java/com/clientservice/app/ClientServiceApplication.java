@@ -44,11 +44,13 @@ public class ClientServiceApplication implements CommandLineRunner {
 		DocumentType ruc = new DocumentType("1","RUC");
 		DocumentType dni = new DocumentType("2","DNI");
 
-		Client client1 = new Client(null, "47924858", "Av. chimpu 444", ruc, persona1, null);
-		Client client2 = new Client(null, "47924859", "Av. chimpu 442", ruc, persona2, null);
-		Client client3 = new Client(null, "47924860", "Av. chimpu 441", ruc, persona3, null);
+		Client client1 = new Client(null, "75858553", "Av. chimpu 444", dni, persona1, null);
+		Client client2 = new Client(null, "47924859", "Av. chimpu 442", dni, persona2, null);
+		Client client3 = new Client(null, "47924860", "Av. chimpu 441", dni, persona3, null);
+		Client client4 = new Client(null, "78945612348754", "Av. chimpu 442", ruc, null, personal);
+		Client client5 = new Client(null, "7896542125136454", "Av. chimpu 441", ruc, null, empresarial);
 
-		Flux.just(client1, client2, client3)
+		Flux.just(client1, client2, client3,client4,client5)
 				.flatMap(c -> clientService.save(c))
 				.doOnNext(c -> log.info("Cliente agregado :" + c.toString()))
 				.subscribe();
