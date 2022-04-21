@@ -5,6 +5,7 @@ spring:
     config:
       server:
         git:
+          default-label: Presentacion1 #nomnbre de la rama actual
           uri: https://github.com/CleverSalvador/BootcampMicroservicesBank
           search-paths: config-data
   security:
