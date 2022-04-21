@@ -1,9 +1,7 @@
 package com.clientservice.app;
 
-import com.clientservice.app.document.BussinessPerson;
 import com.clientservice.app.document.Client;
-import com.clientservice.app.document.DocumentType;
-import com.clientservice.app.document.NaturalPerson;
+import com.clientservice.app.document.TypeClient;
 import com.clientservice.app.service.ClientService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +12,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 import reactor.core.publisher.Flux;
 
+import java.net.URI;
 import java.util.Date;
+import java.util.UUID;
 
 @SpringBootApplication
 public class ClientServiceApplication implements CommandLineRunner {
@@ -29,30 +29,28 @@ public class ClientServiceApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		reactiveMongoTemplate.dropCollection("Client");
-		reactiveMongoTemplate.dropCollection("DocumentType");
+		reactiveMongoTemplate.dropCollection("Client").subscribe();
+		reactiveMongoTemplate.dropCollection("typeClient").subscribe();
 
+		TypeClient personal = new TypeClient(null,"Personal");
+		TypeClient business = new TypeClient(null,"Business");
 
-		BussinessPerson personal = new BussinessPerson("personal");
-		BussinessPerson empresarial = new BussinessPerson("Empresarial");
-		BussinessPerson tarjeta = new BussinessPerson("Tarjeta de Credito");
+		Flux.just(personal,business)
+				.flatMap(t -> clientService.saveTypeClient(t))
+				.doOnNext(t -> log.info("Tipo de Cliente registrado" + t.getDescription()))
+				.thenMany(Flux.just(
+								new Client(null, "Clever", "Salvador",personal,"12346","Jr. ABC",null,null),
+								new Client(null, "Jenny", "Cruz",personal,"789465","Jr. BCD",null,null),
+								new Client(null, "Jorge", "Meniz",business, UUID.randomUUID().toString(),"Jr. BCDCDCD",null,null),
+								new Client(null, "Cristhian", "Galardo",business,"12346","Jr. ABC",null,null),
+								new Client(null, "Pablo", "Gomez",personal,UUID.randomUUID().toString(),"Jr. ABC",null,null),
+								new Client(null, "Gabriel", "Garcia",personal,"1234456","Jr. ABCcd",null,null))
+						.flatMap(client ->{
+							client.setCreateAt(new Date());
+							client.setUpdateDate(new Date());
+							return clientService.save(client);
+						}))
+				.subscribe(e -> log.info("Cliente registrado : " + e.toString()));
 
-		NaturalPerson persona1 = new NaturalPerson("Clever","Salvador",new Date());
-		NaturalPerson persona2 = new NaturalPerson("Oscar","velazco",new Date());
-		NaturalPerson persona3 = new NaturalPerson("juan","nima",new Date());
-
-		DocumentType ruc = new DocumentType("1","RUC");
-		DocumentType dni = new DocumentType("2","DNI");
-
-		Client client1 = new Client(null, "75858553", "Av. chimpu 444", dni, persona1, null);
-		Client client2 = new Client(null, "47924859", "Av. chimpu 442", dni, persona2, null);
-		Client client3 = new Client(null, "47924860", "Av. chimpu 441", dni, persona3, null);
-		Client client4 = new Client(null, "78945612348754", "Av. chimpu 442", ruc, null, personal);
-		Client client5 = new Client(null, "7896542125136454", "Av. chimpu 441", ruc, null, empresarial);
-
-		Flux.just(client1, client2, client3,client4,client5)
-				.flatMap(c -> clientService.save(c))
-				.doOnNext(c -> log.info("Cliente agregado :" + c.toString()))
-				.subscribe();
 	}
 }

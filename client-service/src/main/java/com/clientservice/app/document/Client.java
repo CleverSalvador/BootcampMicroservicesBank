@@ -9,6 +9,11 @@ import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import java.util.Date;
+
 @Document(collection = "Client")
 @Getter
 @Setter
@@ -18,12 +23,20 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Client {
     @Id
     private String id; //Identificador del cliente
-    private String document;
+    @NotEmpty
+    private String firtName;
+    @NotEmpty
+    private String lastName;
+    @Valid
+    @NotNull
+    private TypeClient typeClient;
+    @NotEmpty
+    private String document;/*DNI o RUC*/
+    @NotEmpty
     private String direction;
-    private DocumentType documentType;
-    @Nullable
-    private NaturalPerson naturalPerson;
-    @Nullable
-    private BussinessPerson bussinessPerson;
+    private Date createAt;/*Fecha de creacion*/
+    private Date updateDate;/*Fecha de modificacion*/
+
+
     
 }

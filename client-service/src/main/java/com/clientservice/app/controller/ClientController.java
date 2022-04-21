@@ -9,10 +9,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.WebExchangeBindException;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import javax.validation.Valid;
 import java.net.URI;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/client")
@@ -40,19 +45,13 @@ public class ClientController {
                 .body(c))
                 .defaultIfEmpty(ResponseEntity.notFound().build());
     }
-    
-    @PostMapping("/")
-    public Mono<ResponseEntity<Client>> save(@RequestBody Client client){
-        return clientService.save(client).map(c -> ResponseEntity.created(URI.create("/api/client/".concat(c.getId())))
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(c));
-    }
 
     @PutMapping("/{id}")
     public Mono<ResponseEntity<Client>> update(@RequestBody Client client, @PathVariable String id){
         return clientService.findById(id).flatMap(c ->{
              c.setDirection(client.getDirection());
-             c.setNaturalPerson(client.getNaturalPerson());
+             c.setUpdateDate(new Date());
+             c.setDocument(c.getDocument());
              return clientService.save(c);
         }).map(c -> ResponseEntity.created(URI.create("/api/client".concat(c.getId())))
                 .contentType(MediaType.APPLICATION_JSON)
@@ -64,5 +63,45 @@ public class ClientController {
         return clientService.findById(id).flatMap(c ->{
             return clientService.delete(c).then(Mono.just(new ResponseEntity<Void>(HttpStatus.NO_CONTENT)));
         }).defaultIfEmpty(new ResponseEntity<Void>(HttpStatus.NOT_FOUND));
+    }
+
+    @PostMapping("/")
+    public Mono<ResponseEntity<Client>> save( @RequestBody Client client){
+        if(client.getCreateAt()==null){
+            client.setCreateAt(new Date());
+        }
+        return clientService.save(client).map(c -> ResponseEntity
+                .created(URI.create("/api/client/".concat(c.getId())))
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(c));
+    }
+    @PostMapping("/v2")
+    public Mono<ResponseEntity<Map<String,Object>>> saveV2(@Valid @RequestBody Mono<Client> monoclient){
+        Map<String,Object> respuesta = new HashMap<String,Object>();
+        return monoclient.flatMap(client ->{
+            if(client.getCreateAt()==null){
+                client.setCreateAt(new Date());
+        }
+            return clientService.save(client).map(c -> {
+                respuesta.put("client",c);
+                respuesta.put("message","Cliente creado exitosamente");
+                return ResponseEntity
+                        .created(URI.create("/api/client/".concat(c.getId())))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(respuesta);
+            });
+        }).onErrorResume(t -> {
+            return Mono.just(t).cast(WebExchangeBindException.class)
+                    .flatMap(e -> Mono.just(e.getFieldErrors()))
+                    .flatMapMany(errors -> Flux.fromIterable(errors))
+                    .map(e -> "El campo " + e.getField() + " " + e.getDefaultMessage())
+                    .collectList()
+                    .flatMap(list ->{
+                        respuesta.put("errors",list);
+                        respuesta.put("status",HttpStatus.BAD_REQUEST.value());
+                        return Mono.just(ResponseEntity.badRequest().body(respuesta));
+                    });
+        });
+
     }
 }

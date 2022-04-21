@@ -5,9 +5,13 @@ spring:
     config:
       server:
         git:
-          default-label: config-service
+          default-label: config-service #nomnbre de la rama actual
           uri: https://github.com/CleverSalvador/BootcampMicroservicesBank
           search-paths: config-data
+  #security:
+  #  user:
+   #   name: root
+    #  password: s3cr3t
   application:
     name: config-service
 
