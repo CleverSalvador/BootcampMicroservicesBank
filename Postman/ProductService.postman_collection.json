@@ -1,0 +1,111 @@
+{
+	"info": {
+		"_postman_id": "1dc61ef9-9791-4eb0-bccf-dbef4b7f77ca",
+		"name": "ProductService",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "getAccountNaturalPerson",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/account/accountSave/1111",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"account",
+						"accountSave",
+						"1111"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "regAccountNaturalPerson",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"balance\":\"100.00\",\r\n    \"idClient\":\"1111\",\r\n    \"accountType\": {\r\n        \"id\": \"625c84427efde4796db8663f\",\r\n        \"description\":\"Cuenta Corriente\"\r\n    },\r\n    \"state\" : {\r\n        \"id\": \"625c84427efde4796db86641\",\r\n        \"description\":\"Activa\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/account",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"account"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "regOperationNaturalPerson",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"idAccount\": \"625d7220cfacfb5b73c5fc02\",\r\n    \"idClient\": \"1111\",\r\n    \"operationType\": {\r\n        \"id\":\"DEP\",\r\n        \"Description\":\"Deposito\"\r\n    },\r\n    \"description\": \"Deposito de Pedro\",\r\n    \"value\": 50.0,\r\n    \"channelOperation\": {\r\n        \"id\": \"1\",\r\n        \"description\": \"Agente\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/account/operation",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"account",
+						"operation"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getOperationsNaturalPerson",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/account/operation",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"account",
+						"operation"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
