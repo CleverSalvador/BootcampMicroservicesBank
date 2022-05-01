@@ -4,7 +4,7 @@ server:
 spring:
   data:
     mongodb:
-      uri: mongodb:localhost:2707/db_client
+      uri: mongodb:localhost:27017/db_client
 eureka:
   client:
     fetch-registry: true
