@@ -1,2 +1,15 @@
 server:
   port: 8001
+
+spring:
+  data:
+    mongodb:
+      uri: mongodb:localhost:2707/db_client
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      default-zone: http://localhost:8761/eureka
+      instance:
+        hostname: localhost
