@@ -18,8 +18,8 @@ import java.util.Date;
 import java.util.UUID;
 @EnableEurekaClient
 @SpringBootApplication
-public class ClientServiceApplication implements CommandLineRunner {
-	private static final Logger log = LoggerFactory.getLogger(ClientServiceApplication.class);
+public class ClientServiceApplication /*implements CommandLineRunner*/ {
+	/*private static final Logger log = LoggerFactory.getLogger(ClientServiceApplication.class);
 	@Autowired
 	ClientService clientService;
 	@Autowired
@@ -53,5 +53,9 @@ public class ClientServiceApplication implements CommandLineRunner {
 						}))
 				.subscribe(e -> log.info("Cliente registrado : " + e.toString()));
 
+	}*/
+	public static void main(String[] args) {
+		SpringApplication.run(ClientServiceApplication.class, args);
 	}
+
 }

@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "5e85d38b-ec9e-4cfa-9dee-489580e75d39",
+		"_postman_id": "62f2805c-9486-4cf8-9d46-5fa653e1b144",
 		"name": "ClientService",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -9,7 +9,20 @@
 			"name": "GetFindAllClients",
 			"request": {
 				"method": "GET",
-				"header": []
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/client/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"client",
+						""
+					]
+				}
 			},
 			"response": []
 		},
@@ -17,39 +30,122 @@
 			"name": "GetFindByIdClient",
 			"request": {
 				"method": "GET",
-				"header": []
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/client/6272a90bac455270b4ecf9e3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"client",
+						"6272a90bac455270b4ecf9e3"
+					]
+				}
 			},
 			"response": []
 		},
 		{
 			"name": "PostSaveClient",
 			"request": {
-				"method": "GET",
-				"header": []
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firtName\": \"Cristihian\",\r\n    \"lastName\": \"Huangal\",\r\n    \"typeClient\": {\r\n        \"id\": \"2\",\r\n        \"description\": \"Bussiness\"\r\n    },\r\n    \"document\": \"5858553\",\r\n    \"direction\": \"Jr,ede\"\r\n}\r\n{\r\n    \"firtName\": \"Clever\",\r\n    \"lastName\": \"Salvador\",\r\n    \"typeClient\": {\r\n        \"id\": \"1\",\r\n        \"description\": \"Person\"\r\n    },\r\n    \"document\": \"4569887\",\r\n    \"direction\": \"Jr,huhu\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/client/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"client",
+						""
+					]
+				}
 			},
 			"response": []
 		},
 		{
 			"name": "PutClient",
 			"request": {
-				"method": "GET",
-				"header": []
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8001/api/client/colocar_id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"api",
+						"client",
+						"colocar_id"
+					]
+				}
 			},
 			"response": []
 		},
 		{
 			"name": "DeleteClient",
 			"request": {
-				"method": "GET",
-				"header": []
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/client/colocar_id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"client",
+						"colocar_id"
+					]
+				}
 			},
 			"response": []
 		},
 		{
 			"name": "PostSaveV2",
 			"request": {
-				"method": "GET",
-				"header": []
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/client/v2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"client",
+						"v2"
+					]
+				}
 			},
 			"response": []
 		}

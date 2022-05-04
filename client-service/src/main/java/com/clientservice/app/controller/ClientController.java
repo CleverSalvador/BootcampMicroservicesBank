@@ -47,22 +47,18 @@ public class ClientController {
     }
 
     @PutMapping("/{id}")
-    public Mono<ResponseEntity<Client>> update(@RequestBody Client client, @PathVariable String id){
-        return clientService.findById(id).flatMap(c ->{
-             c.setDirection(client.getDirection());
-             c.setUpdateDate(new Date());
-             c.setDocument(c.getDocument());
-             return clientService.save(c);
-        }).map(c -> ResponseEntity.created(URI.create("/api/client".concat(c.getId())))
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(c))
+    public Mono<ResponseEntity<Client>> update2(@RequestBody Client client, @PathVariable String id){
+        return clientService.update(client,id)
+                .map(c -> ResponseEntity.created(URI.create("/api/client".concat(c.getId())))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(c))
                 .defaultIfEmpty(ResponseEntity.notFound().build());
     }
+
     @DeleteMapping("/{id}")
-    public Mono<ResponseEntity<Void>> delete(@PathVariable String id){
-        return clientService.findById(id).flatMap(c ->{
-            return clientService.delete(c).then(Mono.just(new ResponseEntity<Void>(HttpStatus.NO_CONTENT)));
-        }).defaultIfEmpty(new ResponseEntity<Void>(HttpStatus.NOT_FOUND));
+    public Mono<ResponseEntity<Void>> deletev2(@PathVariable String id){
+        return clientService.delete(id).then(Mono.just(new ResponseEntity<Void>(HttpStatus.NO_CONTENT))
+                .defaultIfEmpty(new ResponseEntity<Void>(HttpStatus.NOT_FOUND)));
     }
 
     @PostMapping("/")
@@ -70,11 +66,15 @@ public class ClientController {
         if(client.getCreateAt()==null){
             client.setCreateAt(new Date());
         }
+        if(client.getUpdateDate()== null){
+            client.setUpdateDate(new Date());
+        }
         return clientService.save(client).map(c -> ResponseEntity
                 .created(URI.create("/api/client/".concat(c.getId())))
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(c));
     }
+
     @PostMapping("/v2")
     public Mono<ResponseEntity<Map<String,Object>>> saveV2(@Valid @RequestBody Mono<Client> monoclient){
         Map<String,Object> respuesta = new HashMap<String,Object>();
@@ -102,6 +102,6 @@ public class ClientController {
                         return Mono.just(ResponseEntity.badRequest().body(respuesta));
                     });
         });
-
     }
+
 }

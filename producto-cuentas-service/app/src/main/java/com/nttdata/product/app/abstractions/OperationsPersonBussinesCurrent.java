@@ -9,47 +9,43 @@ import com.nttdata.product.app.document.Audit;
 import com.nttdata.product.app.document.Operation;
 import com.nttdata.product.app.document.OperationType;
 import com.nttdata.product.app.dto.EntidadDTO;
-import com.nttdata.product.app.dto.OperationPersonNaturalAccountRequest;
+import com.nttdata.product.app.dto.OperationPersonBussinesAccountRequest;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-public class OperationsPersonNaturalCurrent extends OperationsPersonNatural {
-
-    private static final Logger log = LoggerFactory.getLogger(OperationsPersonNaturalCurrent.class);
+public class OperationsPersonBussinesCurrent extends OperationsPersonBussines {
 
     @Override
-    public EntidadDTO<Account> Dep(OperationPersonNaturalAccountRequest entidad, Account p,
+    public EntidadDTO<Account> Dep(OperationPersonBussinesAccountRequest entidad, Account p,
             AccountType at) {
         
-        if (entidad.getValue() < at.getCommission()) {
+                if (entidad.getValue() < at.getCommission()) {
 
-            return new EntidadDTO<Account>(false,
-            "El monto de deposito debe ser mayor a la comision.", null);
-        } else {
-
-            Operation operation = new Operation(
-                    UUID.randomUUID().toString().replace("-", ""),
-                    new OperationType("DEP", "Deposito"),
-                    entidad.getDescription(),
-                    entidad.getValue(),
-                    at.getCommission(),
-                    entidad.getValue() - at.getCommission(),
-                    new Date(),
-                    new Audit(entidad.getIdClient(), new Date(), null, null),
-                    entidad.getChannelOperation());
-
-            p.getOperations().add(operation);
-
-            return new EntidadDTO<Account>(true,
-                    "Operación permitida.", p);
-
-            }
+                    return new EntidadDTO<Account>(false,
+                    "El monto de deposito debe ser mayor a la comision.", null);
+                } else {
+        
+                    Operation operation = new Operation(
+                            UUID.randomUUID().toString().replace("-", ""),
+                            new OperationType("DEP", "Deposito"),
+                            entidad.getDescription(),
+                            entidad.getValue(),
+                            at.getCommission(),
+                            entidad.getValue() - at.getCommission(),
+                            new Date(),
+                            new Audit(entidad.getIdClient(), new Date(), null, null),
+                            entidad.getChannelOperation());
+        
+                    p.getOperations().add(operation);
+        
+                    return new EntidadDTO<Account>(true,
+                            "Operación permitida.", p);
+        
+                    }
     }
 
     @Override
-    public EntidadDTO<Account> Wit(OperationPersonNaturalAccountRequest entidad, Account p,
+    public EntidadDTO<Account> Wit(OperationPersonBussinesAccountRequest entidad, Account p,
             AccountType at) {
+
                 if (entidad.getValue() <= at.getCommission())
                 return new EntidadDTO<Account>(false,
                         "El valor a retirar debe ser mayor a la comision.", null);
@@ -76,7 +72,7 @@ public class OperationsPersonNaturalCurrent extends OperationsPersonNatural {
     }
 
     @Override
-    public EntidadDTO<Account> Pay(OperationPersonNaturalAccountRequest entidad, Account p,
+    public EntidadDTO<Account> Pay(OperationPersonBussinesAccountRequest entidad, Account p,
             AccountType at) {
         if (entidad.getValue() >= (p.getBalance()))
             return new EntidadDTO<Account>(false,
@@ -99,5 +95,5 @@ public class OperationsPersonNaturalCurrent extends OperationsPersonNatural {
                     "Operación permitida.", p);
         }
     }
-
+    
 }

@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.Date;
+
 @Service
 public class ClientServiceImpl implements ClientService {
     @Autowired
@@ -28,13 +30,25 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public Mono<Void> delete(Client document) {
-        return clientRepository.delete(document);
+    public Mono<Client> update(Client document, String id) {
+        return clientRepository.findById(id).flatMap(c ->{
+            c.setFirtName(document.getFirtName());
+            c.setLastName(document.getLastName());
+            c.setDocument(document.getDocument());
+            c.setTypeClient(document.getTypeClient());
+            c.setUpdateDate(new Date());
+            return clientRepository.save(c);
+        });
     }
 
     @Override
     public Flux<Client> findAll() {
         return clientRepository.findAll();
+    }
+
+    @Override
+    public Mono<Void> delete(String id) {
+        return clientRepository.deleteById(id);
     }
 
 
@@ -52,4 +66,11 @@ public class ClientServiceImpl implements ClientService {
     public Mono<TypeClient> findByIdTypeClient(String id) {
         return typeClientRepository.findById(id);
     }
+
+    @Override
+    public Mono<TypeClient> findByDescription(String description) {
+        return typeClientRepository.findByDescription(description);
+    }
+
+
 }

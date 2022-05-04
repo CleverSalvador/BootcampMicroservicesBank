@@ -2,6 +2,7 @@ package com.nttdata.product.app.document;
 
 
 import java.util.Collection;
+import java.util.Date;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
@@ -24,17 +25,18 @@ public class Product {
     private String id;
     private String productCode;
     private Double balance;
+    private Double creditLimit;
     private String idProductType;
     private String idState;
+    private Collection<ProductSchedulePay> productSchedulePays;
     private Collection<String> idClients;
     private Collection<Operation> operations;
-    
-    @Transient
+    private Card card;
+
     private ProductType productType;
-    @Transient
-    private State accountState;
-    @Transient
-    private Collection<Client> clients;
+    private State productState;
+    //@Transient
+    //private Collection<Client> clients;
     
     
 }

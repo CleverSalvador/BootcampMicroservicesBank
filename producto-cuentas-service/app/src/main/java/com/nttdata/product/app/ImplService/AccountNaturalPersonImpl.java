@@ -15,10 +15,15 @@ import com.nttdata.product.app.dto.AccountNaturalPersonOperationListResponse;
 import com.nttdata.product.app.dto.AccountSaveRegRequest;
 import com.nttdata.product.app.dto.EntidadDTO;
 import com.nttdata.product.app.dto.OperationPersonNaturalAccountRequest;
+import com.nttdata.product.app.dto.PersonNaturalReport;
+import com.nttdata.product.app.dto.ProductNaturalPersonCreditListResponse;
 import com.nttdata.product.app.repository.AccountRepository;
 import com.nttdata.product.app.repository.AccountTypeRepository;
+import com.nttdata.product.app.repository.ProductRepository;
 import com.nttdata.product.app.service.AccountNaturalPersonService;
+import com.nttdata.product.app.service.ProductNaturalPersonService;
 import com.nttdata.product.app.util.AccountTypeEnum;
+import com.nttdata.product.app.util.GenericFunction;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,6 +42,8 @@ public class AccountNaturalPersonImpl implements AccountNaturalPersonService {
         private AccountRepository accountRepository;
         @Autowired
         private AccountTypeRepository accountTypeRepository;
+        @Autowired
+        private ProductRepository productRepository;
 
         @Override
         public Mono<EntidadDTO<AccountSaveRegRequest>> save(AccountSaveRegRequest entidad) {
@@ -92,7 +99,8 @@ public class AccountNaturalPersonImpl implements AccountNaturalPersonService {
                                                                                         null,
                                                                                         new ArrayList<Operation>(),
                                                                                         entidad.getAccountType(),
-                                                                                        entidad.getState());
+                                                                                        entidad.getState(),
+                                                                                        GenericFunction.generateCard());
 
                                                                         obj.getEntidad().setAccountNumber(
                                                                                         accountRandom);
@@ -459,7 +467,11 @@ public class AccountNaturalPersonImpl implements AccountNaturalPersonService {
                                                                                                                         null));
                                                                                 });
 
-                                                        });
+                                                        })
+                                                        .defaultIfEmpty(new EntidadDTO<OperationPersonNaturalAccountRequest>(
+                                                                        false,
+                                                                        "No se encontro la cuenta",
+                                                                        null));
                                 });
 
         }
@@ -477,4 +489,31 @@ public class AccountNaturalPersonImpl implements AccountNaturalPersonService {
                                                 mapper.getState(),
                                                 mapper.getOperations()));
         }
+
+        @Override
+        public Mono<EntidadDTO<PersonNaturalReport>> getReport(String id) {
+                return accountRepository.findAll()
+                                .filter(p -> p.getIdClients().contains(id))
+                                .map(mapper -> new AccountNaturalPersonListResponse(mapper.getId(),
+                                                mapper.getAccountNumber(),
+                                                mapper.getBalance(),
+                                                id,
+                                                mapper.getAccountType().getDescription(),
+                                                mapper.getState().getDescription()))
+                                .collectList()
+                                .flatMap(accounts -> {
+                                        
+                                        return productRepository.findAll()
+                                        .filter(p1 -> p1.getIdClients().contains(id))
+                                        .collectList()
+                                        .map(products -> {
+
+                                                return new EntidadDTO<PersonNaturalReport>(true,"Resultado",
+                                                new PersonNaturalReport(accounts,products));
+                                                
+                                        });
+                                });
+        }
+
+        
 }

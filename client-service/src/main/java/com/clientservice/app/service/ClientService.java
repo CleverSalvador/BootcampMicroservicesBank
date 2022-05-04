@@ -11,4 +11,6 @@ public interface ClientService extends RepositoryCrud<Client> {
     Flux<TypeClient> findAllTypeClient();
     Mono<TypeClient> saveTypeClient(TypeClient typeClient);
     Mono<TypeClient> findByIdTypeClient(String id);
+    Mono<TypeClient> findByDescription(String description);
+
 }

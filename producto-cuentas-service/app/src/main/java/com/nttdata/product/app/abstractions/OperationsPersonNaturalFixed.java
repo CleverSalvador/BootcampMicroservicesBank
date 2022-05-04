@@ -39,8 +39,6 @@ public class OperationsPersonNaturalFixed extends OperationsPersonNatural {
 
             p.getOperations().add(operation);
 
-            p.getOperations().add(operation);
-
             return new EntidadDTO<Account>(true,
                     "Operación permitida.", p);
 
