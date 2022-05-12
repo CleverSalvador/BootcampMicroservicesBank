@@ -2,6 +2,7 @@ package com.clientservice.app.controller;
 
 import com.clientservice.app.document.Client;
 import com.clientservice.app.service.ClientService;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,7 @@ public class ClientController {
 				.body(clientService.findAll())
 				); 
     }
-
+    @CircuitBreaker(name = "clientCB",fallbackMethod = "metodoAlternativo")
     @GetMapping("/{id}")
     public Mono<ResponseEntity<Client>> findById(@PathVariable String id){
         return clientService.findById(id).map(c -> ResponseEntity.ok()
@@ -102,6 +103,9 @@ public class ClientController {
                         return Mono.just(ResponseEntity.badRequest().body(respuesta));
                     });
         });
+    }
+    public void metodoAlternativo(){
+        System.out.println("Falla en el sistema");
     }
 
 }

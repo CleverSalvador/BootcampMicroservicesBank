@@ -61,7 +61,7 @@ public class AccountNaturalPersonController {
 					
                     return ResponseEntity
 					//.created(URI.create("/api/productos/".concat(p.getEntidad().getAccountNumber())))
-					.created(URI.create("/api/productos/"))
+					.created(URI.create("/api/accountNaturalPerson"))
 					.contentType(MediaType.APPLICATION_JSON)
 					.body(respuesta);
                 });

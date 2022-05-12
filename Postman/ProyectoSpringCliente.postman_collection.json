@@ -1,0 +1,349 @@
+{
+	"info": {
+		"_postman_id": "5c3de5c8-62b9-473b-a8f9-b3e9730a9947",
+		"name": "ProyectoSpringCliente",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Obtener cuenta de persona natural",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/accountNaturalPerson/account/1111",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"accountNaturalPerson",
+						"account",
+						"1111"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener cuenta de persona empresarial",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/accountBussinesPerson/account/1112",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"accountBussinesPerson",
+						"account",
+						"1112"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Registrar cuenta de persona natural",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"balance\":\"100.00\",\r\n    \"idClient\":\"1111\",\r\n    \"accountType\": {\r\n        \"id\": \"625c84427efde4796db8663e\",\r\n        \"description\":\"Cuenta Ahorros\"\r\n    },\r\n    \"state\" : {\r\n        \"id\": \"625c84427efde4796db86641\",\r\n        \"description\":\"Activa\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/accountNaturalPerson",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"accountNaturalPerson"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Registro de Credito de Persona Natural",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"balance\":\"1200.00\",\r\n    \"productSchedulePays\": [{\r\n        \"letter\": \"1\",\r\n        \"datePay\":\"2022-05-04\",\r\n        \"datePayed\": null,\r\n        \"value\":\"200.00\",\r\n        \"state\" : {\r\n            \"id\": \"D\",\r\n            \"description\":\"Pendiente\"\r\n        }\r\n    },{\r\n        \"letter\": \"2\",\r\n        \"datePay\":\"2022-06-04\",\r\n        \"datePayed\": null,\r\n        \"value\":\"200.00\",\r\n        \"state\" : {\r\n            \"id\": \"D\",\r\n            \"description\":\"Pendiente\"\r\n        }\r\n    },{\r\n        \"letter\": \"3\",\r\n        \"datePay\":\"2022-07-04\",\r\n        \"datePayed\": null,\r\n        \"value\":\"200.00\",\r\n        \"state\" : {\r\n            \"id\": \"D\",\r\n            \"description\":\"Pendiente\"\r\n        }\r\n    }],\r\n    \"idClient\":\"1113\",\r\n    \"productType\": {\r\n        \"id\":\"625c84427efde4796db8663a\",\r\n        \"description\":\"Personal\"\r\n    },\r\n    \"productState\" : {\r\n        \"id\": \"625c84427efde4796db86641\",\r\n        \"description\":\"Activa\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/creditNaturalPerson/credit",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"creditNaturalPerson",
+						"credit"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Registro de Credito de Persona empresarial",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"balance\":\"1200.00\",\r\n    \"productSchedulePays\": [{\r\n        \"letter\": \"1\",\r\n        \"datePay\":\"2022-05-04\",\r\n        \"datePayed\": null,\r\n        \"value\":\"200.00\",\r\n        \"state\" : {\r\n            \"id\": \"D\",\r\n            \"description\":\"Pendiente\"\r\n        }\r\n    },{\r\n        \"letter\": \"2\",\r\n        \"datePay\":\"2022-06-04\",\r\n        \"datePayed\": null,\r\n        \"value\":\"200.00\",\r\n        \"state\" : {\r\n            \"id\": \"D\",\r\n            \"description\":\"Pendiente\"\r\n        }\r\n    },{\r\n        \"letter\": \"3\",\r\n        \"datePay\":\"2022-07-04\",\r\n        \"datePayed\": null,\r\n        \"value\":\"200.00\",\r\n        \"state\" : {\r\n            \"id\": \"D\",\r\n            \"description\":\"Pendiente\"\r\n        }\r\n    }],\r\n    \"idClient\":\"1114\",\r\n    \"productType\": {\r\n        \"id\":\"625c84427efde4796db8663a\",\r\n        \"description\":\"Personal\"\r\n    },\r\n    \"productState\" : {\r\n        \"id\": \"625c84427efde4796db86641\",\r\n        \"description\":\"Activa\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/creditBussinesPerson/credit",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"creditBussinesPerson",
+						"credit"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Registro de cuenta de persona empresarial",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"balance\":\"100.00\",\r\n    \"idClients\":[\"1112\"],\r\n    \"accountType\": {\r\n        \"id\": \"625c84427efde4796db8663f\",\r\n        \"description\":\"Cuenta Corriente\"\r\n    },\r\n    \"state\" : {\r\n        \"id\": \"625c84427efde4796db86641\",\r\n        \"description\":\"Activa\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/accountBussinesPerson",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"accountBussinesPerson"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Registrar operacion de cuenta de persona natural",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"idAccount\": \"626fd2175a726924128dd5b6\",\r\n    \"idClient\": \"1111\",\r\n    \"operationType\": {\r\n        \"id\":\"DEP\",\r\n        \"Description\":\"Deposito\"\r\n    },\r\n    \"description\": \"Deposito de Pedro\",\r\n    \"value\": 30.0,\r\n    \"channelOperation\": {\r\n        \"id\": \"1\",\r\n        \"description\": \"Agente\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/accountNaturalPerson/operation",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"accountNaturalPerson",
+						"operation"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Registrar operacion de cuenta de persona empresarial",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"idAccount\": \"626fedacf9701525aa1fbcd4\",\r\n    \"idClient\": \"1112\",\r\n    \"operationType\": {\r\n        \"id\":\"WIT\",\r\n        \"Description\":\"Retiro\"\r\n    },\r\n    \"description\": \"Retiro de Pedro\",\r\n    \"value\": 30.0,\r\n    \"channelOperation\": {\r\n        \"id\": \"1\",\r\n        \"description\": \"Agente\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/accountBussinesPerson/operation",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"accountBussinesPerson",
+						"operation"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Pagar credito persona natural",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"idAccount\": \"626fedacf9701525aa1fbcd4\",\r\n    \"idClient\": \"1112\",\r\n    \"operationType\": {\r\n        \"id\":\"WIT\",\r\n        \"Description\":\"Retiro\"\r\n    },\r\n    \"description\": \"Retiro de Pedro\",\r\n    \"value\": 30.0,\r\n    \"channelOperation\": {\r\n        \"id\": \"1\",\r\n        \"description\": \"Agente\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/accountBussinesPerson/operation",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"accountBussinesPerson",
+						"operation"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener operaciones de cuenta de persona natural",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/accountNaturalPerson/operations/626fd2175a726924128dd5b6",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"accountNaturalPerson",
+						"operations",
+						"626fd2175a726924128dd5b6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener credito de persona natural",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/creditNaturalPerson/credit/1113",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"creditNaturalPerson",
+						"credit",
+						"1113"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener credito de persona empresarial",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/creditNaturalPerson/credit/1114",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"creditNaturalPerson",
+						"credit",
+						"1114"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener operaciones de cuenta de persona empresarial",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/accountBussinesPerson/operations/626fedacf9701525aa1fbcd4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"accountBussinesPerson",
+						"operations",
+						"626fedacf9701525aa1fbcd4"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

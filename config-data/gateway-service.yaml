@@ -16,7 +16,7 @@ spring:
         locator:
           enabled: true
       routes:
-      - id: client-serive
+      - id: client-service
         uri: lb://client-service
         predicates:
         - Path=/api/client/**
@@ -24,3 +24,7 @@ spring:
         uri: lb://product-service
         predicates:
         - Path=/api/account/**
+        - Path=/api/accountBussinesPerson/**
+        - Path=/api/accountNaturalPerson/**
+        - Path=/api/creditBussinesPerson/**
+        - Path=/api/creditNaturalPerson/**

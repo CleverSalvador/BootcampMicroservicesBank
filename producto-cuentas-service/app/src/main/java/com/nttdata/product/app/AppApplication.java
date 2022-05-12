@@ -19,6 +19,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
+import reactor.core.publisher.Flux;
 
 
 @SpringBootApplication
@@ -43,10 +44,10 @@ public class AppApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		// TODO Auto-generated method stub
-		/*
-		reactiveMongoTemplate.dropCollection("product_type");
-		reactiveMongoTemplate.dropCollection("account_type");
-		reactiveMongoTemplate.dropCollection("state");
+
+		reactiveMongoTemplate.dropCollection("product_type").subscribe();
+		reactiveMongoTemplate.dropCollection("account_type").subscribe();
+		reactiveMongoTemplate.dropCollection("state").subscribe();
 
 		ProductType productTypePerson = new ProductType(null, "Personal");
 		ProductType productTypeBusiness = new ProductType(null, "Empresarial");
@@ -95,7 +96,7 @@ public class AppApplication implements CommandLineRunner {
 				.flatMap(c -> stateService.save(c))
 				.doOnNext(c -> log.info("State added :" + c.toString()))
 				.subscribe();
-		*/
+
 	}
 
 }
