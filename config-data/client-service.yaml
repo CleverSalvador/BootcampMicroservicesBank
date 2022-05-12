@@ -36,10 +36,3 @@ resilience4j.bulkhead:
     clientCB:
       maxWaitDuration: 10ms
       maxConcurrentCalls: 20
-
-spring:
-  cache:
-    type: redis
-    redis:
-      time-to-live: 6000
-      cache-null-values: true
