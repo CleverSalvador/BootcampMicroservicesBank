@@ -57,7 +57,7 @@ public class CreditNaturalPersonController {
 					
                     return ResponseEntity
 					//.created(URI.create("/api/productos/".concat(p.getEntidad().getAccountNumber())))
-					.created(URI.create("/api/productos/"))
+					.created(URI.create("/api/creditNaturalPerson"))
 					.contentType(MediaType.APPLICATION_JSON)
 					.body(respuesta);
                 });

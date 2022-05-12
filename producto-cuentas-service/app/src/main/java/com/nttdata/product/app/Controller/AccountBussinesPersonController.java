@@ -59,7 +59,7 @@ public class AccountBussinesPersonController {
 					
                     return ResponseEntity
 					//.created(URI.create("/api/productos/".concat(p.getEntidad().getAccountNumber())))
-					.created(URI.create("/api/productos/"))
+					.created(URI.create("/api/accountBussinesPerson"))
 					.contentType(MediaType.APPLICATION_JSON)
 					.body(respuesta);
                 });
@@ -79,7 +79,7 @@ public class AccountBussinesPersonController {
 					
                     return ResponseEntity
 					//.created(URI.create("/api/productos/".concat(p.getEntidad().getAccountNumber())))
-					.created(URI.create("/api/operation"))
+					.created(URI.create("/api/accountBussinesPerson"))
 					.contentType(MediaType.APPLICATION_JSON)
 					.body(respuesta);
                 });

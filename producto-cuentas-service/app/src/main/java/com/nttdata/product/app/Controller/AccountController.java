@@ -64,7 +64,7 @@ public class AccountController {
 					
                     return ResponseEntity
 					//.created(URI.create("/api/productos/".concat(p.getEntidad().getAccountNumber())))
-					.created(URI.create("/api/productos/"))
+					.created(URI.create("/api/account"))
 					.contentType(MediaType.APPLICATION_JSON)
 					.body(respuesta);
                 });
@@ -84,7 +84,7 @@ public class AccountController {
 					
                     return ResponseEntity
 					//.created(URI.create("/api/productos/".concat(p.getEntidad().getAccountNumber())))
-					.created(URI.create("/api/operation"))
+					.created(URI.create("/api/account"))
 					.contentType(MediaType.APPLICATION_JSON)
 					.body(respuesta);
                 });

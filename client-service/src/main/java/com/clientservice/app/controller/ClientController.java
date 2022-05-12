@@ -6,6 +6,7 @@ import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -38,9 +39,12 @@ public class ClientController {
 				.body(clientService.findAll())
 				); 
     }
-    @CircuitBreaker(name = "clientCB",fallbackMethod = "metodoAlternativo")
+    //@CircuitBreaker(name = "clientCB",fallbackMethod = "metodoAlternativo")
+
     @GetMapping("/{id}")
+    @Cacheable(value = "client",key="#id")
     public Mono<ResponseEntity<Client>> findById(@PathVariable String id){
+        log.info("Buscando cliente con ID:" + id);
         return clientService.findById(id).map(c -> ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(c))
