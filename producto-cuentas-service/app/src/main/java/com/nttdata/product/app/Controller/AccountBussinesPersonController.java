@@ -12,6 +12,7 @@ import com.nttdata.product.app.dto.OperationPersonBussinesAccountRequest;
 import com.nttdata.product.app.service.AccountBusinessPersonService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,7 +33,8 @@ public class AccountBussinesPersonController {
     AccountBusinessPersonService accountBusinessPersonService;
 
     @GetMapping("/account/{id}")
-	public Mono<ResponseEntity<Flux<AccountBusinessPersonListResponse>>> getAccounSaveByIdClient(@PathVariable String id){
+	@Cacheable(value = "account", key="#id")
+	public Mono<ResponseEntity<Flux<AccountBusinessPersonListResponse>>> getAccounSaveByIdClient(@PathVariable(value = "id") String id){
 		return Mono.just(
 				ResponseEntity.ok()
 				.contentType(MediaType.APPLICATION_JSON)
@@ -87,8 +89,8 @@ public class AccountBussinesPersonController {
 	}
 
 	@GetMapping("/operations/{id}")
-	public Mono<ResponseEntity<Mono<AccountBussinesPersonOperationListResponse>>> getOperationByIdAccount(@PathVariable String id){
-
+	@Cacheable(value = "operations", key="#id")
+	public Mono<ResponseEntity<Mono<AccountBussinesPersonOperationListResponse>>> getOperationByIdAccount(@PathVariable(value = "id") String id){
 		return Mono.just(
 				ResponseEntity.ok()
 				.contentType(MediaType.APPLICATION_JSON)

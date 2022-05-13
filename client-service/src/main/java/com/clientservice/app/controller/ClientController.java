@@ -6,6 +6,8 @@ import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -39,11 +41,10 @@ public class ClientController {
 				.body(clientService.findAll())
 				); 
     }
-    //@CircuitBreaker(name = "clientCB",fallbackMethod = "metodoAlternativo")
-
+    @CircuitBreaker(name = "clientCB",fallbackMethod = "metodoAlternativo")
     @GetMapping("/{id}")
-    @Cacheable(value = "client",key="#id")
-    public Mono<ResponseEntity<Client>> findById(@PathVariable String id){
+    @Cacheable(value = "client", key="#id")
+    public Mono<ResponseEntity<Client>> findById(@PathVariable(value = "id") String id){
         log.info("Buscando cliente con ID:" + id);
         return clientService.findById(id).map(c -> ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_JSON)
@@ -52,7 +53,8 @@ public class ClientController {
     }
 
     @PutMapping("/{id}")
-    public Mono<ResponseEntity<Client>> update2(@RequestBody Client client, @PathVariable String id){
+    @CachePut(value = "client",key = "#id")
+    public Mono<ResponseEntity<Client>> update(@RequestBody Client client, @PathVariable(value = "id") String id){
         return clientService.update(client,id)
                 .map(c -> ResponseEntity.created(URI.create("/api/client".concat(c.getId())))
                         .contentType(MediaType.APPLICATION_JSON)
@@ -61,7 +63,8 @@ public class ClientController {
     }
 
     @DeleteMapping("/{id}")
-    public Mono<ResponseEntity<Void>> deletev2(@PathVariable String id){
+    @CacheEvict(value = "client",allEntries = true)
+    public Mono<ResponseEntity<Void>> delete(@PathVariable String id){
         return clientService.delete(id).then(Mono.just(new ResponseEntity<Void>(HttpStatus.NO_CONTENT))
                 .defaultIfEmpty(new ResponseEntity<Void>(HttpStatus.NOT_FOUND)));
     }

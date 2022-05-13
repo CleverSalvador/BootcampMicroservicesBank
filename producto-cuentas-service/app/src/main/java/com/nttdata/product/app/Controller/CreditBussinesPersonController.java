@@ -16,6 +16,7 @@ import com.nttdata.product.app.dto.ProductBussinesPersonCreditRegRequest;
 import com.nttdata.product.app.service.ProductBussinesPersonService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,7 +37,8 @@ public class CreditBussinesPersonController {
     ProductBussinesPersonService productBussainesPersonService;
 
     @GetMapping("/credit/{id}")
-	public Mono<ResponseEntity<Flux<ProductBussinesPersonCreditListResponse>>> getCreditsByIdClient(@PathVariable String id){
+	@Cacheable(value = "credit", key="#id")
+	public Mono<ResponseEntity<Flux<ProductBussinesPersonCreditListResponse>>> getCreditsByIdClient(@PathVariable(value = "id") String id){
 		return Mono.just(
 				ResponseEntity.ok()
 				.contentType(MediaType.APPLICATION_JSON)
@@ -86,7 +88,8 @@ public class CreditBussinesPersonController {
 	}
 
 	@GetMapping("/operations/credit/{id}")
-	public Mono<ResponseEntity<Mono<CreditNaturalBussinesOperationListResponse>>> getOperationByIdAccount(@PathVariable String id){
+	@Cacheable(value = "operations", key="#id")
+	public Mono<ResponseEntity<Mono<CreditNaturalBussinesOperationListResponse>>> getOperationByIdAccount(@PathVariable(value = "id") String id){
 		return Mono.just(
 				ResponseEntity.ok()
 				.contentType(MediaType.APPLICATION_JSON)
@@ -95,7 +98,8 @@ public class CreditBussinesPersonController {
 	}
 
 	@GetMapping("/creditCard/{id}")
-	public Mono<ResponseEntity<Flux<ProductBussinesPersonCreditCardListResponse>>> getCreditsCardByIdClient(@PathVariable String id){
+	@Cacheable(value = "creditCard", key="#id")
+	public Mono<ResponseEntity<Flux<ProductBussinesPersonCreditCardListResponse>>> getCreditsCardByIdClient(@PathVariable(value = "id") String id){
 		return Mono.just(
 				ResponseEntity.ok()
 				.contentType(MediaType.APPLICATION_JSON)
@@ -145,7 +149,8 @@ public class CreditBussinesPersonController {
 	}
 
 	@GetMapping("/operations/creditCard/{id}")
-	public Mono<ResponseEntity<Mono<CreditCardBussinesPersonOperationListResponse>>> getOperationCreditCardByIdAccount(@PathVariable String id){
+	@Cacheable(value = "operations", key="#id")
+	public Mono<ResponseEntity<Mono<CreditCardBussinesPersonOperationListResponse>>> getOperationCreditCardByIdAccount(@PathVariable(value = "id") String id){
 		return Mono.just(
 				ResponseEntity.ok()
 				.contentType(MediaType.APPLICATION_JSON)
